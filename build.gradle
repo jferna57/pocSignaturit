@@ -135,7 +135,7 @@ dependencies {
     compile ("com.ryantenney.metrics:metrics-spring:${metrics_spring_version}") {
         exclude(module: 'metrics-core')
         exclude(module: 'metrics-healthchecks')
-    } 
+    }
     compile "org.hibernate:hibernate-core:${hibernate_entitymanager_version}"
     compile("com.zaxxer:HikariCP:${HikariCP_version}") {
         exclude(module: 'tools')
@@ -145,7 +145,7 @@ dependencies {
     compile "javax.inject:javax.inject:${javax_inject_version}"
     compile "javax.transaction:javax.transaction-api"
     compile "org.apache.geronimo.javamail:geronimo-javamail_1.4_mail:${geronimo_javamail_1_4_mail_version}"
-    
+
     compile ("org.hibernate:hibernate-ehcache") {
         exclude(module: 'ehcache-core')
     }
@@ -183,6 +183,9 @@ dependencies {
     compile "com.h2database:h2"
     compile "fr.ippon.spark.metrics:metrics-spark-reporter:${metrics_spark_reporter_version}"
     compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
+
+    compile 'com.signaturit.api:java-sdk:1.0.10'
+
     testCompile "com.jayway.awaitility:awaitility:${awaility_version}"
     testCompile "com.jayway.jsonpath:json-path"
     testCompile "org.springframework.boot:spring-boot-starter-test"
@@ -193,9 +196,9 @@ dependencies {
     testCompile "org.mockito:mockito-core"
     testCompile "com.mattbertolini:liquibase-slf4j:${liquibase_slf4j_version}"
     testCompile "org.hamcrest:hamcrest-library"
-    
+
     testCompile "io.gatling.highcharts:gatling-charts-highcharts:${gatling_version}"
-    
+
     optional "org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
