@@ -1,0 +1,117 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myContractLabel" data-translate="pocSignaturitApp.contract.home.createOrEditLabel">Create or edit a Contract</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.contract.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.contract.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="pocSignaturitApp.contract.contractName" for="field_contractName">Contract Name</label>
+            <input type="text" class="form-control" name="contractName" id="field_contractName"
+                    ng-model="vm.contract.contractName"
+                    required />
+            <div ng-show="editForm.contractName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.contractName.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setDocument($file, vm.contract)">
+            <label class="control-label" data-translate="pocSignaturitApp.contract.document" for="field_document">Document</label>
+            <div>
+                <div ng-if="vm.contract.document" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.contract.documentContentType, vm.contract.document)" data-translate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{vm.contract.documentContentType}}, {{vm.byteSize(vm.contract.document)}}</span>
+                    <button ng-click="vm.contract.document=null;vm.contract.documentContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setDocument($file, vm.contract)" data-translate="entity.action.addblob">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="document" id="field_document"
+                    ng-model="vm.contract.document"
+                     />
+            <input type="hidden" class="form-control" name="documentContentType" id="field_documentContentType"
+                    ng-model="vm.contract.documentContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="pocSignaturitApp.contract.status" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.contract.status" id="field_status">
+                <option value="DRAFT" data-translate="pocSignaturitApp.Status.DRAFT">DRAFT</option>
+                <option value="PENDING" data-translate="pocSignaturitApp.Status.PENDING">PENDING</option>
+                <option value="SIGNED" data-translate="pocSignaturitApp.Status.SIGNED">SIGNED</option>
+                <option value="REVOKED" data-translate="pocSignaturitApp.Status.REVOKED">REVOKED</option>
+            </select>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setDocumentSigned($file, vm.contract)">
+            <label class="control-label" data-translate="pocSignaturitApp.contract.documentSigned" for="field_documentSigned">Document Signed</label>
+            <div>
+                <div ng-if="vm.contract.documentSigned" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.contract.documentSignedContentType, vm.contract.documentSigned)" data-translate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{vm.contract.documentSignedContentType}}, {{vm.byteSize(vm.contract.documentSigned)}}</span>
+                    <button ng-click="vm.contract.documentSigned=null;vm.contract.documentSignedContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setDocumentSigned($file, vm.contract)" data-translate="entity.action.addblob">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="documentSigned" id="field_documentSigned"
+                    ng-model="vm.contract.documentSigned"
+                     />
+            <input type="hidden" class="form-control" name="documentSignedContentType" id="field_documentSignedContentType"
+                    ng-model="vm.contract.documentSignedContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="pocSignaturitApp.contract.creationDate" for="field_creationDate">Creation Date</label>
+                <div class="input-group">
+                    <input id="field_creationDate" type="text" class="form-control" name="creationDate" datetime-picker="{{dateformat}}" ng-model="vm.contract.creationDate" is-open="vm.datePickerOpenStatus.creationDate"
+                      />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('creationDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="pocSignaturitApp.contract.signedDate" for="field_signedDate">Signed Date</label>
+                <div class="input-group">
+                    <input id="field_signedDate" type="text" class="form-control" name="signedDate" datetime-picker="{{dateformat}}" ng-model="vm.contract.signedDate" is-open="vm.datePickerOpenStatus.signedDate"
+                      />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('signedDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="pocSignaturitApp.contract.creator" for="field_creator">Creator</label>
+            <select class="form-control" id="field_creator" name="creator" ng-model="vm.contract.creatorId" ng-options="creator.id as creator.id for creator in vm.creators"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,11 @@
+{
+    "pocSignaturitApp": {
+        "Status" : {
+            "null": "",
+            "DRAFT": "DRAFT",
+            "PENDING": "PENDING",
+            "SIGNED": "SIGNED",
+            "REVOKED": "REVOKED"
+        }
+    }
+}

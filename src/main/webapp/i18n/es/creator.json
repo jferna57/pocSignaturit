@@ -1,0 +1,24 @@
+{
+    "pocSignaturitApp": {
+        "creator" : {
+            "home": {
+                "title": "Creators",
+                "createLabel": "Crear nuevo Creator",
+                "createOrEditLabel": "Crear o editar Creator",
+                "search": "Search for Creator"
+            },
+            "created": "Un nuevo Creator ha sido creado con el identificador {{ param }}",
+            "updated": "Un Creator ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Creator ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Creator {{ id }}?"
+            },
+            "detail": {
+                "title": "Creator"
+            },
+            "name": "Name",
+            "email": "Email",
+            "contract": "Contract"
+        }
+    }
+}
