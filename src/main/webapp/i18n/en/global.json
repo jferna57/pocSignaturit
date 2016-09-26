@@ -7,11 +7,6 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
-                "contract": "Contract",
-                "creator": "Creator",
-                "signaturitToken": "Signaturit Token",
-                "signRequest": "Sign Request",
-                "signer": "Signer",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -93,8 +88,7 @@
             "edit": "Edit",
             "open": "Open",
             "save": "Save",
-            "view": "View",
-            "sign": "Sign"
+            "view": "View"
         },
         "detail": {
             "field": "Field",
