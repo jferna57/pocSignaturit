@@ -3,6 +3,7 @@ package net.juancarlosfernandez.jhipster.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import net.juancarlosfernandez.jhipster.domain.SignRequest;
 
+import net.juancarlosfernandez.jhipster.repository.ContractRepository;
 import net.juancarlosfernandez.jhipster.repository.SignRequestRepository;
 import net.juancarlosfernandez.jhipster.web.rest.util.HeaderUtil;
 import net.juancarlosfernandez.jhipster.web.rest.util.PaginationUtil;
@@ -35,12 +36,15 @@ import java.util.stream.Collectors;
 public class SignRequestResource {
 
     private final Logger log = LoggerFactory.getLogger(SignRequestResource.class);
-        
+
     @Inject
     private SignRequestRepository signRequestRepository;
 
     @Inject
     private SignRequestMapper signRequestMapper;
+
+    @Inject
+    private ContractRepository contractRepository;
 
     /**
      * POST  /sign-requests : Create a new signRequest.
@@ -58,6 +62,14 @@ public class SignRequestResource {
         if (signRequestDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "idexists", "A new signRequest cannot already have an ID")).body(null);
         }
+
+        // TODO: Check if contract exists.
+        if (signRequestDTO.getContractId() == null )
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "contractNotDefined", "A signRequest cannot signed whithout a contract")).body(null);
+
+        // TODO: Check if contract as signers.
+
+
         SignRequest signRequest = signRequestMapper.signRequestDTOToSignRequest(signRequestDTO);
         signRequest = signRequestRepository.save(signRequest);
         SignRequestDTO result = signRequestMapper.signRequestToSignRequestDTO(signRequest);
