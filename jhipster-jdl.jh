@@ -1,0 +1,51 @@
+#fontSize: 9
+
+entity Contract {
+	contractName String required,
+    document AnyBlob,
+    status Status,
+    documentSigned AnyBlob,
+    creationDate ZonedDateTime,
+    sentToBeSignedDate ZonedDateTime
+    signedDate ZonedDateTime
+}
+
+entity Creator{
+	name String required,
+    email String required 
+}
+
+entity SignaturitToken{
+	token String required
+}
+
+entity SignRequest {
+	bodyEmail String required,
+    subjectEmail String required,
+	signaturitId String,
+    signaturitDocumentId String
+}
+
+entity Signer{
+	name String required,
+    email String required
+}
+
+enum Status{
+	DRAFT,PENDING,SIGNED,REVOKED
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Creator{contract} to Contract,
+    Contract{signer} to Signer
+}
+
+relationship OneToOne{
+	SignRequest{contract} to Contract
+}
+
+// Set pagination options
+paginate Contract, Creator, Signer, SignRequest with infinite-scroll
+
+dto * with mapstruct

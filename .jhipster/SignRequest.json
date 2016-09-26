@@ -1,0 +1,42 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "contract",
+            "otherEntityName": "contract",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "signRequest"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "bodyEmail",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "subjectEmail",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "signaturitId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "signaturitDocumentId",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160926134549",
+    "entityTableName": "sign_request",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "no"
+}

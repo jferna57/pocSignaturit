@@ -1,0 +1,57 @@
+
+<div>
+    <h2><span data-translate="pocSignaturitApp.contract.detail.title">Contract</span> {{vm.contract.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="pocSignaturitApp.contract.contractName">Contract Name</span></dt>
+        <dd>
+            <span>{{vm.contract.contractName}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.contract.document">Document</span></dt>
+        <dd>
+            <div ng-if="vm.contract.document">
+                <a ng-click="vm.openFile(vm.contract.documentContentType, vm.contract.document)" data-translate="entity.action.open">open</a>
+                {{vm.contract.documentContentType}}, {{vm.byteSize(vm.contract.document)}}
+            </div>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.contract.status">Status</span></dt>
+        <dd>
+            <span data-translate="{{'pocSignaturitApp.Status.' + vm.contract.status}}">{{vm.contract.status}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.contract.documentSigned">Document Signed</span></dt>
+        <dd>
+            <div ng-if="vm.contract.documentSigned">
+                <a ng-click="vm.openFile(vm.contract.documentSignedContentType, vm.contract.documentSigned)" data-translate="entity.action.open">open</a>
+                {{vm.contract.documentSignedContentType}}, {{vm.byteSize(vm.contract.documentSigned)}}
+            </div>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.contract.creationDate">Creation Date</span></dt>
+        <dd>
+            <span>{{vm.contract.creationDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.contract.sentToBeSignedDate">Sent To Be Signed Date</span></dt>
+        <dd>
+            <span>{{vm.contract.sentToBeSignedDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.contract.signedDate">Signed Date</span></dt>
+        <dd>
+            <span>{{vm.contract.signedDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.contract.creator">Creator</span></dt>
+        <dd>
+            <a ui-sref="creator-detail({id:vm.contract.creatorId})">{{vm.contract.creatorId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="contract-detail.edit({id:vm.contract.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

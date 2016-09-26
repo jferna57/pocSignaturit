@@ -1,0 +1,26 @@
+{
+    "pocSignaturitApp": {
+        "signRequest" : {
+            "home": {
+                "title": "Sign Requests",
+                "createLabel": "Create a new Sign Request",
+                "createOrEditLabel": "Create or edit a Sign Request",
+                "search": "Search for Sign Request"
+            },
+            "created": "A new Sign Request is created with identifier {{ param }}",
+            "updated": "A Sign Request is updated with identifier {{ param }}",
+            "deleted": "A Sign Request is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Sign Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Sign Request"
+            },
+            "bodyEmail": "Body Email",
+            "subjectEmail": "Subject Email",
+            "signaturitId": "Signaturit Id",
+            "signaturitDocumentId": "Signaturit Document Id",
+            "contract": "Contract"
+        }
+    }
+}

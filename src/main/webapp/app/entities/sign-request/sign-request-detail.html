@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="pocSignaturitApp.signRequest.detail.title">Sign Request</span> {{vm.signRequest.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="pocSignaturitApp.signRequest.bodyEmail">Body Email</span></dt>
+        <dd>
+            <span>{{vm.signRequest.bodyEmail}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.signRequest.subjectEmail">Subject Email</span></dt>
+        <dd>
+            <span>{{vm.signRequest.subjectEmail}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.signRequest.signaturitId">Signaturit Id</span></dt>
+        <dd>
+            <span>{{vm.signRequest.signaturitId}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.signRequest.signaturitDocumentId">Signaturit Document Id</span></dt>
+        <dd>
+            <span>{{vm.signRequest.signaturitDocumentId}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.signRequest.contract">Contract</span></dt>
+        <dd>
+            <a ui-sref="contract-detail({id:vm.signRequest.contractId})">{{vm.signRequest.contractId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="sign-request-detail.edit({id:vm.signRequest.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>
