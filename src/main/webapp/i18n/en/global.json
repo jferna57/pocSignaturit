@@ -94,7 +94,8 @@
             "open": "Open",
             "save": "Save",
             "view": "View",
-            "sign": "Sign"
+            "sign": "Sign",
+            "addSigner": "Add Signer"
         },
         "detail": {
             "field": "Field",
@@ -124,7 +125,12 @@
         "userexists": "Login name already used!",
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID",
-        "contractNotDefined": "A contract cannot be signed whithout establish the contract to sign"
+        "contractNotDefined": "A contract cannot be signed whithout establish the contract to sign",
+        "signersNotDefined": "A signRequest cannot be signed whithout a list of signers",
+        "tokenNotDefined": "Signaturit Token not defined. Please define before sign a contract",
+        "documentToSignNotDefined": "A contract cannot be signed without establish the document to sign",
+        "signaturitIdNotDefined":"The signaturit service doesn't respond with a correct Id"
+
 
     },
     "footer": "This is your footer"

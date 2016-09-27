@@ -94,7 +94,8 @@
             "open": "Open",
             "save": "Guardar",
             "view": "Vista",
-            "sign": "Firmar"
+            "sign": "Firmar",
+            "addSigner": "Add Signer"
         },
         "detail": {
             "field": "Campo",
@@ -124,7 +125,11 @@
         "userexists": "Login name already used!",
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{entityName}} cannot already have an ID",
-        "contractNotDefined": "A contract cannot be signed whithout establish the contract to sign"
+        "contractNotDefined": "Un contrato no se puede firmar sin no se específica el número",
+        "signersNotDefined": "Un contrato no se puede firmar sin definir los firmantes",
+        "tokenNotDefined": "Token de signaturit no definido. Por favor, defínalo antes de firmar",
+        "documentToSignNotDefined": "Un contrato no se puede firmar sin definir el documento del contrato",
+        "signaturitIdNotDefined":"El servicio web de signaturit no ha respondido con un Id correcto"
     },
     "footer": "pie de página"
 }
