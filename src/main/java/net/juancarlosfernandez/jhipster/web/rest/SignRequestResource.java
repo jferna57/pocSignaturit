@@ -1,14 +1,25 @@
 package net.juancarlosfernandez.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import net.juancarlosfernandez.jhipster.domain.Contract;
 import net.juancarlosfernandez.jhipster.domain.SignRequest;
 
+import net.juancarlosfernandez.jhipster.domain.SignaturitToken;
+import net.juancarlosfernandez.jhipster.domain.Signer;
 import net.juancarlosfernandez.jhipster.repository.ContractRepository;
 import net.juancarlosfernandez.jhipster.repository.SignRequestRepository;
+import net.juancarlosfernandez.jhipster.repository.SignaturitTokenRepository;
+import net.juancarlosfernandez.jhipster.repository.SignerRepository;
+import net.juancarlosfernandez.jhipster.service.dto.ContractDTO;
 import net.juancarlosfernandez.jhipster.web.rest.util.HeaderUtil;
 import net.juancarlosfernandez.jhipster.web.rest.util.PaginationUtil;
 import net.juancarlosfernandez.jhipster.service.dto.SignRequestDTO;
 import net.juancarlosfernandez.jhipster.service.mapper.SignRequestMapper;
+import okhttp3.Response;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,14 +30,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import net.juancarlosfernandez.jhipster.domain.enumeration.Status;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import com.signaturit.api.java_sdk.Client;
+
+import static java.time.Instant.now;
 
 /**
  * REST controller for managing SignRequest.
@@ -46,6 +63,12 @@ public class SignRequestResource {
     @Inject
     private ContractRepository contractRepository;
 
+    @Inject
+    private SignaturitTokenRepository signaturitTokenRepository;
+
+    @Inject
+    private SignerRepository signerRepository;
+
     /**
      * POST  /sign-requests : Create a new signRequest.
      *
@@ -57,21 +80,83 @@ public class SignRequestResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<SignRequestDTO> createSignRequest(@Valid @RequestBody SignRequestDTO signRequestDTO) throws URISyntaxException {
+    public ResponseEntity<SignRequestDTO> createSignRequest(@Valid @RequestBody SignRequestDTO signRequestDTO) throws URISyntaxException, IOException {
         log.debug("REST request to save SignRequest : {}", signRequestDTO);
+
         if (signRequestDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "idexists", "A new signRequest cannot already have an ID")).body(null);
         }
 
-        // TODO: Check if contract exists.
-        if (signRequestDTO.getContractId() == null )
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "contractNotDefined", "A signRequest cannot signed whithout a contract")).body(null);
+        // Check if contract exists.
+        Long contractId = signRequestDTO.getContractId();
+        if ( contractId == null )
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "contractNotDefined", "A signRequest cannot be signed whithout a contract")).body(null);
+        Contract contract = contractRepository.findOne(contractId);
 
-        // TODO: Check if contract as signers.
+        // Check if contract has signers.
+        List<Signer> signers = signerRepository.findByContract(contract);
+        if( signers == null)
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "signersNotDefined", "A signRequest cannot be signed whithout a list of signers")).body(null);
 
+        // Check if signaturit token is established
+        if (signaturitTokenRepository.findAll().size()!=1)
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "tokenNotDefined", "You must define a signaturit token first")).body(null);
+
+        // Check if the contract document is established
+        byte[] document = contract.getDocument();
+        if(document==null)
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "documentToSignNotDefined", "You must define a signaturit token first")).body(null);
+
+        String token = signaturitTokenRepository.findAll().get(0).getToken();
+
+        Client client = new Client(token);
+
+        // Get the document to be signed
+        File documentToSigned = new File(contract.getContractName()+now().toString());
+        FileUtils.writeByteArrayToFile(documentToSigned, document);
+
+        // Add to the arrayList
+        ArrayList<File> filePath = new ArrayList<File>();
+        filePath.add(documentToSigned);
+
+        // Add contract's signers emails and name
+        ArrayList<HashMap<String, Object>> recipients = new ArrayList<HashMap<String,Object>>();
+
+        for (Signer signer : signers) {
+            HashMap<String, Object> recipient = new HashMap<String, Object>();
+            recipient.put("email", signer.getEmail());
+            recipient.put("fullname", signer.getName());
+            recipients.add(recipient);
+        }
+
+        // Add subject and body to the email
+        HashMap<String, Object> options= new HashMap<String, Object>();
+        options.put("subject", signRequestDTO.getSubjectEmail());
+        options.put("body", signRequestDTO.getBodyEmail());
+
+        Response response = client.createSignature(filePath, recipients);
+        String jsonData = response.body().string();
+
+        // Recover the signaturitId and save into the signRequestDTO
+        String signatuitId = "" ;
+        try {
+
+            JSONObject jObject = new JSONObject(jsonData);
+            signatuitId = jObject.get("id").toString();
+
+        } catch (JSONException e) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "signaturitIdNotDefined", "The signaturit service doesn't respond with a correct Id")).body(null);
+        }
+
+        signRequestDTO.setSignaturitId(signatuitId);
 
         SignRequest signRequest = signRequestMapper.signRequestDTOToSignRequest(signRequestDTO);
         signRequest = signRequestRepository.save(signRequest);
+
+        // Change the contract status to PENDING
+        contract.setStatus(Status.PENDING);
+        contractRepository.save(contract);
+
         SignRequestDTO result = signRequestMapper.signRequestToSignRequestDTO(signRequest);
         return ResponseEntity.created(new URI("/api/sign-requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("signRequest", result.getId().toString()))
@@ -91,7 +176,7 @@ public class SignRequestResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<SignRequestDTO> updateSignRequest(@Valid @RequestBody SignRequestDTO signRequestDTO) throws URISyntaxException {
+    public ResponseEntity<SignRequestDTO> updateSignRequest(@Valid @RequestBody SignRequestDTO signRequestDTO) throws URISyntaxException, IOException {
         log.debug("REST request to update SignRequest : {}", signRequestDTO);
         if (signRequestDTO.getId() == null) {
             return createSignRequest(signRequestDTO);
