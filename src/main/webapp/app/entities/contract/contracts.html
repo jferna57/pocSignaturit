@@ -61,6 +61,21 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
                             </button>
+
+                            <button type="submit"
+                                    ng-hide="contract.status!='DRAFT'"
+                                    ui-sref="sign-request.new({id:contract.id})"
+                                    class="btn btn-warning btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.sign"></span>
+                            </button>
+                            <button type="submit"
+                                    ng-hide="contract.status!='DRAFT'"
+                                    ui-sref="signer.new({id:contract.id})"
+                                    class="btn btn-warning btn-sm">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.addSigner"></span>
+                            </button>
                             <button type="submit"
                                     ui-sref="contract.delete({id:contract.id})"
                                     class="btn btn-danger btn-sm">
