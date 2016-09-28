@@ -3,6 +3,7 @@ package net.juancarlosfernandez.jhipster.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import net.juancarlosfernandez.jhipster.domain.Contract;
 
+import net.juancarlosfernandez.jhipster.domain.enumeration.Status;
 import net.juancarlosfernandez.jhipster.repository.ContractRepository;
 import net.juancarlosfernandez.jhipster.web.rest.util.HeaderUtil;
 import net.juancarlosfernandez.jhipster.web.rest.util.PaginationUtil;
@@ -22,11 +23,14 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZoneId;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import static java.time.Instant.now;
 
 /**
  * REST controller for managing Contract.
@@ -36,7 +40,7 @@ import java.util.stream.StreamSupport;
 public class ContractResource {
 
     private final Logger log = LoggerFactory.getLogger(ContractResource.class);
-        
+
     @Inject
     private ContractRepository contractRepository;
 
@@ -60,6 +64,10 @@ public class ContractResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("contract", "idexists", "A new contract cannot already have an ID")).body(null);
         }
         Contract contract = contractMapper.contractDTOToContract(contractDTO);
+        // Add default values
+        contract.setStatus(Status.DRAFT);
+        contract.setCreationDate(now().atZone(ZoneId.systemDefault()));
+
         contract = contractRepository.save(contract);
         ContractDTO result = contractMapper.contractToContractDTO(contract);
         return ResponseEntity.created(new URI("/api/contracts/" + result.getId()))
