@@ -115,6 +115,8 @@ public class SignRequestResource {
         File documentToSigned = new File(contract.getContractName()+now().toString());
         FileUtils.writeByteArrayToFile(documentToSigned, document);
 
+        // TODO: Delete the document
+
         // Add to the arrayList
         ArrayList<File> filePath = new ArrayList<File>();
         filePath.add(documentToSigned);
