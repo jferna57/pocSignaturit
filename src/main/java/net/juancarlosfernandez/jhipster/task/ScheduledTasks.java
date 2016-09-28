@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class ScheduledTasks {
      * Every 100 seconds synchronize contract information
      */
 
-    @Scheduled(fixedRate = 100000)
+    @Scheduled(fixedRate = 10000)
     //@Scheduled(cron = "* */10 * * * *")
     public void syncSignedContracts() throws IOException, JSONException {
 
@@ -75,6 +76,7 @@ public class ScheduledTasks {
 
                 log.info("Processing contract: {} status: {} ", contract.getContractName(), contract.getStatus());
 
+                // TODO: Check that the contract have a SignRequest entity.
                 SignRequest signRequest = signRequestRepository.findOne(contract.getSignRequest().getId());
                 Response response = client.getSignature(signRequest.getSignaturitId());
                 String jsonData = response.body().string();
@@ -90,10 +92,15 @@ public class ScheduledTasks {
                     response = client.downloadSignedDocument(signRequest.getSignaturitId(), documentId);
                     byte [] signedDocument = response.body().bytes();
 
+                    // Save the documentId to this request.
+                    signRequest.setSignaturitDocumentId(documentId);
+                    signRequestRepository.save(signRequest);
+
                     // change the status of the contract and set the signed document
                     contract.setStatus(Status.SIGNED);
                     contract.setDocumentSigned(signedDocument);
                     contract.setDocumentSignedContentType("application/pdf");
+                    contract.setSignedDate(now().atZone(ZoneId.systemDefault()));
                     contractRepository.save(contract);
 
                 } else {
