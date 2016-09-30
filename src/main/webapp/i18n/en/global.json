@@ -81,6 +81,11 @@
         },
         "ribbon": {
             "dev":"Development"
+        },
+        "actions" : {
+            "title": "Actions",
+            "createContract": "New contract",
+            "viewContracts": "View contracts"
         }
     },
     "entity": {
