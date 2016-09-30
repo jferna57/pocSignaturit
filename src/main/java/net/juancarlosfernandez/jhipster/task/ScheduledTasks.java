@@ -54,7 +54,7 @@ public class ScheduledTasks {
      * Every 100 seconds synchronize contract information
      */
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 100000)
     //@Scheduled(cron = "* */10 * * * *")
     public void syncSignedContracts() throws IOException, JSONException {
 
@@ -76,38 +76,40 @@ public class ScheduledTasks {
 
                 log.info("Processing contract: {} status: {} ", contract.getContractName(), contract.getStatus());
 
-                // TODO: Check that the contract have a SignRequest entity.
-                SignRequest signRequest = signRequestRepository.findOne(contract.getSignRequest().getId());
-                Response response = client.getSignature(signRequest.getSignaturitId());
-                String jsonData = response.body().string();
+                // Check that the contract have a SignRequest entity.
+                if (contract.getSignRequest() != null) {
+                    SignRequest signRequest = signRequestRepository.findOne(contract.getSignRequest().getId());
+                    Response response = client.getSignature(signRequest.getSignaturitId());
+                    String jsonData = response.body().string();
 
-                JSONObject jObject = new JSONObject(jsonData);
-                JSONArray documents = jObject.getJSONArray("documents");
-                String status = documents.getJSONObject(0).get("status").toString();
-                String documentId = documents.getJSONObject(0).get("id").toString();
+                    JSONObject jObject = new JSONObject(jsonData);
+                    JSONArray documents = jObject.getJSONArray("documents");
+                    String status = documents.getJSONObject(0).get("status").toString();
+                    String documentId = documents.getJSONObject(0).get("id").toString();
 
-                if (status.equalsIgnoreCase("completed")){
+                    if (status.equalsIgnoreCase("completed")) {
 
-                    // Get the signed document
-                    response = client.downloadSignedDocument(signRequest.getSignaturitId(), documentId);
-                    byte [] signedDocument = response.body().bytes();
+                        // Get the signed document
+                        response = client.downloadSignedDocument(signRequest.getSignaturitId(), documentId);
+                        byte[] signedDocument = response.body().bytes();
 
-                    // Save the documentId to this request.
-                    signRequest.setSignaturitDocumentId(documentId);
-                    signRequestRepository.save(signRequest);
+                        // Save the documentId to this request.
+                        signRequest.setSignaturitDocumentId(documentId);
+                        signRequestRepository.save(signRequest);
 
-                    // change the status of the contract and set the signed document
-                    contract.setStatus(Status.SIGNED);
-                    contract.setDocumentSigned(signedDocument);
-                    contract.setDocumentSignedContentType("application/pdf");
-                    contract.setSignedDate(now().atZone(ZoneId.systemDefault()));
-                    contractRepository.save(contract);
+                        // change the status of the contract and set the signed document
+                        contract.setStatus(Status.SIGNED);
+                        contract.setDocumentSigned(signedDocument);
+                        contract.setDocumentSignedContentType("application/pdf");
+                        contract.setSignedDate(now().atZone(ZoneId.systemDefault()));
+                        contractRepository.save(contract);
 
-                } else {
-                    log.info("Contract {} with signaturitId {} not signed yet. Status {} ",
-                        contract.getContractName(),
-                        signRequest.getSignaturitId(),
-                        status);
+                    } else {
+                        log.info("Contract {} with signaturitId {} not signed yet. Status {} ",
+                            contract.getContractName(),
+                            signRequest.getSignaturitId(),
+                            status);
+                    }
                 }
 
             }
