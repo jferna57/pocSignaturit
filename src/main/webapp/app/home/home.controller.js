@@ -5,9 +5,9 @@
         .module('pocSignaturitApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Contract', '$state'];
 
-    function HomeController ($scope, Principal, LoginService, $state) {
+    function HomeController ($scope, Principal, Contract, LoginService, $state) {
         var vm = this;
 
         vm.account = null;

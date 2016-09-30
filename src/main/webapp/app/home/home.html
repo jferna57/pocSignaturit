@@ -1,9 +1,9 @@
-<div ng-cloak>
+<div ng-cloak ng-switch="vm.isAuthenticated()">
     <div class="row" >
-        <div class="col-md-2" ng-switch="vm.isAuthenticated()">
-            <h3 ng-switch-when="true" data-translate="global.actions.title" translate-compile>Actions</h3>
+        <div class="col-md-2" ng-switch-when="true">
+            <h3  data-translate="global.actions.title" translate-compile>Actions</h3>
             <br/>
-            <div ng-switch-when="true" class="btn-group-vertical" role="group">
+            <div class="btn-group-vertical" role="group">
                 <button class="btn btn-success" ui-sref="contract" >
                     <span class="glyphicon glyphicon-search"></span>
                     <span  data-translate="global.actions.viewContracts">
@@ -19,7 +19,7 @@
             </div>
 
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10" ng-switch-when="false">
             <h1 data-translate="home.title">Contract Lifecycle Management</h1>
             <p class="lead" data-translate="home.subtitle">This is your homepage</p>
 
@@ -32,6 +32,22 @@
                     If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
                 </div>
 
+            </div>
+
+        </div>
+        <div class="col-md-10" ng-switch-when="true">
+            <h1 data-translate="home.dashboard">Contract Dashboard</h1>
+
+            <div class="col-md-5">
+                <h3 data-translate="home.contract.draft"></h3>
+            </div>
+
+            <div class="col-md-5">
+                <h3 data-translate="home.contract.signed"></h3>
+            </div>
+
+            <div class="col-md-5">
+                <h3 data-translate="home.contract.pending"></h3>
             </div>
 
         </div>

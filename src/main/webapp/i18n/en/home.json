@@ -1,6 +1,7 @@
 {
     "home": {
         "title": "Contract Lifecycle Managment!",
+        "dashboard": "Dashboard",
         "subtitle": "This is your homepage",
         "actions": "Actions",
         "logged": {
@@ -13,6 +14,11 @@
             "bugtracker": "JHipster bug tracker",
             "chat": "JHipster public chat room",
             "follow": "follow @java_hipster on Twitter"
+        },
+        "contract":{
+            "draft": "Draft",
+            "signed": "Signed",
+            "pending": "Pending"
         },
         "like": "If you like JHipster, don't forget to give us a star on",
         "github": "GitHub"
