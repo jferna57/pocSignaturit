@@ -1,7 +1,8 @@
 {
     "home": {
-        "title": "Welcome, Java Hipster!",
+        "title": "Contract Lifecycle Managment!",
         "subtitle": "This is your homepage",
+        "actions": "Actions",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
