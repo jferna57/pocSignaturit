@@ -1,8 +1,38 @@
 <div ng-cloak>
-    <div class="row">
-        <div class="col-md-4">
+    <div class="row" >
+        <div class="col-md-2" ng-switch="vm.isAuthenticated()">
+            <h3 ng-switch-when="true" data-translate="global.actions.title" translate-compile>Actions</h3>
+            <br/>
+            <div ng-switch-when="true" class="btn-group-vertical" role="group">
+                <button class="btn btn-success" ui-sref="contract" >
+                    <span class="glyphicon glyphicon-search"></span>
+                    <span  data-translate="global.actions.viewContracts">
+                            Create new Contract
+                        </span>
+                </button>
+                <button class="btn btn-success" ui-sref="contract.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="global.actions.createContract" translate-compile>
+                    Create new Contract
+                    </span>
+                </button>
+            </div>
+
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
+            <h1 data-translate="home.title">Contract Lifecycle Management</h1>
+            <p class="lead" data-translate="home.subtitle">This is your homepage</p>
+
+            <div ng-switch="vm.isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true" data-translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
+                    You are logged in as user "{{vm.account.login}}".
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false" data-translate="global.messages.info.authenticated" translate-compile>
+                    If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                </div>
+
+            </div>
 
         </div>
     </div>
