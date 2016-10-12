@@ -54,7 +54,7 @@ public class ScheduledTasks {
      * Every 100 seconds synchronize contract information
      */
 
-    @Scheduled(fixedRate = 100000)
+    @Scheduled(fixedRate = 30000)
     //@Scheduled(cron = "* */10 * * * *")
     public void syncSignedContracts() throws IOException, JSONException {
 
@@ -76,7 +76,7 @@ public class ScheduledTasks {
 
                 log.info("Processing contract: {} status: {} ", contract.getContractName(), contract.getStatus());
 
-                // Check that the contract have a SignRequest entity.
+                // TODO: Check that the contract have a SignRequest entity.
                 if (contract.getSignRequest() != null) {
                     SignRequest signRequest = signRequestRepository.findOne(contract.getSignRequest().getId());
                     Response response = client.getSignature(signRequest.getSignaturitId());
