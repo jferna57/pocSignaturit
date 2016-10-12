@@ -1,0 +1,12 @@
+version: '2'
+services:
+    pocsignaturit-postgresql:
+        container_name: pocsignaturit-postgresql
+        image: postgres:9.5.4
+        # volumes:
+        #     - ~/volumes/jhipster/pocSignaturit/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=pocSignaturit
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

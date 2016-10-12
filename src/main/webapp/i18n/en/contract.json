@@ -1,0 +1,30 @@
+{
+    "pocSignaturitApp": {
+        "contract" : {
+            "home": {
+                "title": "Contracts",
+                "createLabel": "Create a new Contract",
+                "createOrEditLabel": "Create or edit a Contract",
+                "search": "Search for Contract"
+            },
+            "created": "A new Contract is created with identifier {{ param }}",
+            "updated": "A Contract is updated with identifier {{ param }}",
+            "deleted": "A Contract is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Contract {{ id }}?"
+            },
+            "detail": {
+                "title": "Contract"
+            },
+            "contractName": "Contract Name",
+            "document": "Document",
+            "status": "Status",
+            "documentSigned": "Document Signed",
+            "creationDate": "Creation Date",
+            "signedDate": "Signed Date",
+            "signer": "Signer",
+            "signRequest": "Sign Request",
+            "creator": "Creator"
+        }
+    }
+}
