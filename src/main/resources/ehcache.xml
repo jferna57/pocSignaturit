@@ -38,32 +38,32 @@
     </cache>
     
     <cache name="net.juancarlosfernandez.jhipster.domain.Contract"
-                               timeToLiveSeconds="3600">
-                        </cache>
-                        
+        timeToLiveSeconds="3600">
+    </cache>
+
     <cache name="net.juancarlosfernandez.jhipster.domain.Contract.signers"
-                               timeToLiveSeconds="3600">
-                        </cache>
-                        
+        timeToLiveSeconds="3600">
+    </cache>
+
     <cache name="net.juancarlosfernandez.jhipster.domain.Creator"
-                               timeToLiveSeconds="3600">
-                        </cache>
-                        
+        timeToLiveSeconds="3600">
+    </cache>
+
     <cache name="net.juancarlosfernandez.jhipster.domain.Creator.contracts"
-                               timeToLiveSeconds="3600">
-                        </cache>
-                        
+        timeToLiveSeconds="3600">
+    </cache>
+
     <cache name="net.juancarlosfernandez.jhipster.domain.SignaturitToken"
-                               timeToLiveSeconds="3600">
-                        </cache>
-                        
+        timeToLiveSeconds="3600">
+    </cache>
+
     <cache name="net.juancarlosfernandez.jhipster.domain.SignRequest"
-                               timeToLiveSeconds="3600">
-                        </cache>
-                        
+        timeToLiveSeconds="3600">
+    </cache>
+
     <cache name="net.juancarlosfernandez.jhipster.domain.Signer"
-                               timeToLiveSeconds="3600">
-                        </cache>
-                        
+        timeToLiveSeconds="3600">
+    </cache>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </ehcache>
