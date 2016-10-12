@@ -38,15 +38,69 @@
         <div class="col-md-10" ng-switch-when="true">
             <h1 data-translate="home.dashboard">Contract Dashboard</h1>
 
-            <div class="col-md-5">
+            <div class="col-md-7">
                 <h3 data-translate="home.contract.draft"></h3>
+                <div class="table-responsive">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+
+                            <th jh-sort-by="contractName"><span data-translate="pocSignaturitApp.contract.contractName">Contract Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="status"><span data-translate="pocSignaturitApp.contract.status">Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                        <tr ng-repeat="contract in vm.contracts track by contract.id">
+
+                            <td><a ui-sref="contract-detail({id:contract.id})">{{contract.contractName}}</a></td>
+                            <td data-translate="{{'pocSignaturitApp.Status.' + contract.status}}">{{contract.status}}</td>
+
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"
+                                            ui-sref="contract-detail({id:contract.id})"
+                                            class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="contract.edit({id:contract.id})"
+                                            class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+
+                                    <button type="submit"
+                                            ng-hide="contract.status!='DRAFT'"
+                                            ui-sref="sign-request.new({id:contract.id})"
+                                            class="btn btn-warning btn-sm">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="hidden-xs hidden-sm" data-translate="entity.action.sign"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ng-hide="contract.status!='DRAFT'"
+                                            ui-sref="signer.new({id:contract.id})"
+                                            class="btn btn-warning btn-sm">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="contract.delete({id:contract.id})"
+                                            class="btn btn-danger btn-sm">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-10">
                 <h3 data-translate="home.contract.signed"></h3>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-10">
                 <h3 data-translate="home.contract.pending"></h3>
             </div>
 

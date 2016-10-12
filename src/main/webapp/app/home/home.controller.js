@@ -5,10 +5,16 @@
         .module('pocSignaturitApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Contract', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Contract', 'ParseLinks', 'AlertService', '$state'];
 
-    function HomeController ($scope, Principal, Contract, LoginService, $state) {
+    function HomeController ($scope, Principal, LoginService, Contract, ParseLinks, AlertService, $state) {
         var vm = this;
+
+        vm.contracts = [];
+        vm.page = 0;
+        vm.links = {
+            last: 0
+        };
 
         vm.account = null;
         vm.isAuthenticated = null;
@@ -19,6 +25,27 @@
         });
 
         getAccount();
+
+        loadAll();
+
+        function loadAll () {
+            Contract.query({page: vm.page,
+               size: 20
+            }, onSuccess, onError);
+
+            function onSuccess(data, headers) {
+               vm.links = ParseLinks.parse(headers('link'));
+               vm.totalItems = headers('X-Total-Count');
+               for (var i = 0; i < data.length; i++) {
+                   vm.contracts.push(data[i]);
+               }
+            }
+
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
+
+        }
 
         function getAccount() {
             Principal.identity().then(function(account) {
