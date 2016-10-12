@@ -31,12 +31,12 @@
                 <div ng-if="vm.contract.document" class="help-block clearfix">
                     <a class="pull-left" ng-click="vm.openFile(vm.contract.documentContentType, vm.contract.document)" data-translate="entity.action.open">open</a><br>
                     <span class="pull-left">{{vm.contract.documentContentType}}, {{vm.byteSize(vm.contract.document)}}</span>
-                    <button ng-click="vm.contract.document=null;vm.contract.documentContentType=null;"
+                    <button type="button" ng-click="vm.contract.document=null;vm.contract.documentContentType=null;"
                             class="btn btn-default btn-xs pull-right">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
-                <button type="file" ngf-select class="btn btn-default btn-block"
+                <button type="button" ngf-select class="btn btn-default btn-block"
                         ngf-change="vm.setDocument($file, vm.contract)" data-translate="entity.action.addblob">
                     Add blob
                 </button>
@@ -62,12 +62,12 @@
                 <div ng-if="vm.contract.documentSigned" class="help-block clearfix">
                     <a class="pull-left" ng-click="vm.openFile(vm.contract.documentSignedContentType, vm.contract.documentSigned)" data-translate="entity.action.open">open</a><br>
                     <span class="pull-left">{{vm.contract.documentSignedContentType}}, {{vm.byteSize(vm.contract.documentSigned)}}</span>
-                    <button ng-click="vm.contract.documentSigned=null;vm.contract.documentSignedContentType=null;"
+                    <button type="button" ng-click="vm.contract.documentSigned=null;vm.contract.documentSignedContentType=null;"
                             class="btn btn-default btn-xs pull-right">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
-                <button type="file" ngf-select class="btn btn-default btn-block"
+                <button type="button" ngf-select class="btn btn-default btn-block"
                         ngf-change="vm.setDocumentSigned($file, vm.contract)" data-translate="entity.action.addblob">
                     Add blob
                 </button>

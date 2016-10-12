@@ -46,8 +46,6 @@ import net.juancarlosfernandez.jhipster.domain.enumeration.Status;
 @SpringBootTest(classes = PocSignaturitApp.class)
 public class ContractResourceIntTest {
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
-
     private static final String DEFAULT_CONTRACT_NAME = "AAAAA";
     private static final String UPDATED_CONTRACT_NAME = "BBBBB";
 
@@ -66,11 +64,11 @@ public class ContractResourceIntTest {
 
     private static final ZonedDateTime DEFAULT_CREATION_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_CREATION_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_CREATION_DATE_STR = dateTimeFormatter.format(DEFAULT_CREATION_DATE);
+    private static final String DEFAULT_CREATION_DATE_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_CREATION_DATE);
 
     private static final ZonedDateTime DEFAULT_SIGNED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_SIGNED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_SIGNED_DATE_STR = dateTimeFormatter.format(DEFAULT_SIGNED_DATE);
+    private static final String DEFAULT_SIGNED_DATE_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_SIGNED_DATE);
 
     @Inject
     private ContractRepository contractRepository;

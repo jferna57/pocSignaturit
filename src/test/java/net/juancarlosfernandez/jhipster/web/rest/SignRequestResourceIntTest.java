@@ -42,10 +42,13 @@ public class SignRequestResourceIntTest {
 
     private static final String DEFAULT_BODY_EMAIL = "AAAAA";
     private static final String UPDATED_BODY_EMAIL = "BBBBB";
+
     private static final String DEFAULT_SUBJECT_EMAIL = "AAAAA";
     private static final String UPDATED_SUBJECT_EMAIL = "BBBBB";
+
     private static final String DEFAULT_SIGNATURIT_ID = "AAAAA";
     private static final String UPDATED_SIGNATURIT_ID = "BBBBB";
+
     private static final String DEFAULT_SIGNATURIT_DOCUMENT_ID = "AAAAA";
     private static final String UPDATED_SIGNATURIT_DOCUMENT_ID = "BBBBB";
 
