@@ -25,13 +25,23 @@
     <page-ribbon></page-ribbon>
     <div ui-view="navbar" ng-cloak></div>
     <div class="container">
-        <div class="well" ui-view="content">
-            <!-- Angular views -->
+
+
+        <div class="row" >
+
+            <div class="col-md-3">
+                <div class="well" ui-view="menu" ng-cloak>
+                    <!-- Menu views -->
+                </div>
+            </div>
+
+            <div class="col-md-9" ng-cloak>
+                <div class="well" ui-view="content">
+                    <!-- Angular views -->
+                </div>
+            </div>
         </div>
 
-        <div class="footer" ng-cloak>
-            <p data-translate="footer">This is your footer</p>
-        </div>
     </div>
 
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
@@ -91,6 +101,7 @@
     <script src="app/layouts/navbar/navbar.controller.js"></script>
     <script src="app/layouts/navbar/active-menu.directive.js"></script>
     <script src="app/layouts/navbar/active-link.directive.js"></script>
+    <script src="app/layouts/menu/menu.controller.js"></script>
     <script src="app/layouts/error/error.state.js"></script>
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>

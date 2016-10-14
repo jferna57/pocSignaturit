@@ -1,24 +1,6 @@
 <div ng-cloak ng-switch="vm.isAuthenticated()">
     <div class="row" >
-        <div class="col-md-2" ng-switch-when="true">
-            <h3  data-translate="global.actions.title" translate-compile>Actions</h3>
-            <br/>
-            <div class="btn-group-vertical" role="group">
-                <button class="btn btn-success" ui-sref="contract" >
-                    <span class="glyphicon glyphicon-search"></span>
-                    <span  data-translate="global.actions.viewContracts">
-                            Create new Contract
-                        </span>
-                </button>
-                <button class="btn btn-success" ui-sref="contract.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span  data-translate="global.actions.createContract" translate-compile>
-                    Create new Contract
-                    </span>
-                </button>
-            </div>
 
-        </div>
         <div class="col-md-10" ng-switch-when="false">
             <h1 data-translate="home.title">Contract Lifecycle Management</h1>
             <p class="lead" data-translate="home.subtitle">This is your homepage</p>
