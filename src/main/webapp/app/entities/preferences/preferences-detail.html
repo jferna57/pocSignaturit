@@ -1,0 +1,27 @@
+
+<div>
+    <h2><span data-translate="pocSignaturitApp.preferences.detail.title">Preferences</span> {{vm.preferences.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="pocSignaturitApp.preferences.name">Name</span></dt>
+        <dd>
+            <span>{{vm.preferences.name}}</span>
+        </dd>
+        <dt><span data-translate="pocSignaturitApp.preferences.value">Value</span></dt>
+        <dd>
+            <span>{{vm.preferences.value}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="preferences-detail.edit({id:vm.preferences.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>
