@@ -10,6 +10,8 @@
     function MenuController ($scope, Principal, LoginService, $state) {
         var vm = this;
 
+        vm.isAuthenticated = Principal.isAuthenticated;
+
 
     }
 })();
