@@ -1,6 +1,6 @@
 # pocSignaturit
 
-This application was generated using JHipster 3.9.1, you can find documentation and help at [https://jhipster.github.io/documentation-archive/v3.9.1](https://jhipster.github.io/documentation-archive/v3.9.1).
+This application was generated using JHipster 3.8.0, you can find documentation and help at [https://jhipster.github.io/documentation-archive/v3.8.0](https://jhipster.github.io/documentation-archive/v3.8.0).
 
 ## Development
 
