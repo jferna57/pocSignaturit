@@ -2,13 +2,13 @@ package net.juancarlosfernandez.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import net.juancarlosfernandez.jhipster.domain.Contract;
+import net.juancarlosfernandez.jhipster.domain.Preferences;
 import net.juancarlosfernandez.jhipster.domain.SignRequest;
 
-import net.juancarlosfernandez.jhipster.domain.SignaturitToken;
 import net.juancarlosfernandez.jhipster.domain.Signer;
 import net.juancarlosfernandez.jhipster.repository.ContractRepository;
+import net.juancarlosfernandez.jhipster.repository.PreferencesRepository;
 import net.juancarlosfernandez.jhipster.repository.SignRequestRepository;
-import net.juancarlosfernandez.jhipster.repository.SignaturitTokenRepository;
 import net.juancarlosfernandez.jhipster.repository.SignerRepository;
 import net.juancarlosfernandez.jhipster.service.dto.ContractDTO;
 import net.juancarlosfernandez.jhipster.web.rest.util.HeaderUtil;
@@ -64,10 +64,10 @@ public class SignRequestResource {
     private ContractRepository contractRepository;
 
     @Inject
-    private SignaturitTokenRepository signaturitTokenRepository;
+    private SignerRepository signerRepository;
 
     @Inject
-    private SignerRepository signerRepository;
+    private PreferencesRepository preferencesRepository;
 
     /**
      * POST  /sign-requests : Create a new signRequest.
@@ -99,7 +99,8 @@ public class SignRequestResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "signersNotDefined", "A signRequest cannot be signed whithout a list of signers")).body(null);
 
         // Check if signaturit token is established
-        if (signaturitTokenRepository.findAll().size()!=1)
+        Optional<Preferences> token = preferencesRepository.findOneByName("token");
+        if (token.isPresent())
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "tokenNotDefined", "You must define a signaturit token first")).body(null);
 
         // Check if the contract document is established
@@ -107,9 +108,7 @@ public class SignRequestResource {
         if(document==null)
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "documentToSignNotDefined", "You must define a signaturit token first")).body(null);
 
-        String token = signaturitTokenRepository.findAll().get(0).getToken();
-
-        Client client = new Client(token);
+        Client client = new Client(token.get().getValue());
 
         // Get the document to be signed
         File documentToSigned = new File(contract.getContractName()+now().toString());

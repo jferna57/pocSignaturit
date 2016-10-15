@@ -9,14 +9,16 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.signaturit.api.java_sdk.Client;
 import net.juancarlosfernandez.jhipster.domain.Contract;
+import net.juancarlosfernandez.jhipster.domain.Preferences;
 import net.juancarlosfernandez.jhipster.domain.SignRequest;
 import net.juancarlosfernandez.jhipster.domain.enumeration.Status;
 import net.juancarlosfernandez.jhipster.repository.ContractRepository;
+import net.juancarlosfernandez.jhipster.repository.PreferencesRepository;
 import net.juancarlosfernandez.jhipster.repository.SignRequestRepository;
-import net.juancarlosfernandez.jhipster.repository.SignaturitTokenRepository;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +44,7 @@ public class ScheduledTasks {
     private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
     @Inject
-    private SignaturitTokenRepository signaturitTokenRepository;
+    private PreferencesRepository preferencesRepository;
 
     @Inject
     private SignRequestRepository signRequestRepository;
@@ -61,14 +63,13 @@ public class ScheduledTasks {
         log.info("Start -> Sync Signed Contracts");
 
         // Check if signaturit token is established
-        if (signaturitTokenRepository.findAll().size()!=1){
+        Optional<Preferences> token = preferencesRepository.findOneByName("token");
+        if ( !token.isPresent()){
             log.error("Signaturit Token not defined!");
         } else {
             log.info("Signaturit Token defined!");
-            String token = signaturitTokenRepository.findAll().get(0).getToken();
 
-            Client client = new Client(token);
-
+            Client client = new Client(token.get().getValue());
 
             List<Contract> contracts= contractRepository.findByStatus(Status.PENDING);
 
