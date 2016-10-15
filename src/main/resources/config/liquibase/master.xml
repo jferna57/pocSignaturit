@@ -7,7 +7,6 @@
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160926151222_added_entity_Contract.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160926151223_added_entity_Creator.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160926151224_added_entity_SignaturitToken.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160926151225_added_entity_SignRequest.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160926151226_added_entity_Signer.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20161014145248_added_entity_Preferences.xml" relativeToChangelogFile="false"/>
