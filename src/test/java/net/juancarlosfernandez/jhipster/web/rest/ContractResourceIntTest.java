@@ -147,7 +147,8 @@ public class ContractResourceIntTest {
         assertThat(testContract.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testContract.getDocumentSigned()).isEqualTo(DEFAULT_DOCUMENT_SIGNED);
         assertThat(testContract.getDocumentSignedContentType()).isEqualTo(DEFAULT_DOCUMENT_SIGNED_CONTENT_TYPE);
-        assertThat(testContract.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
+        // Creation date now is generated automatically by the system.
+        //assertThat(testContract.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
         assertThat(testContract.getSignedDate()).isEqualTo(DEFAULT_SIGNED_DATE);
     }
 
