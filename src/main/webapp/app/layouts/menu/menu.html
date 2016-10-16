@@ -1,8 +1,23 @@
 <div ng-switch="vm.isAuthenticated()">
+
     <div class="btn-group-vertical" role="group" ng-switch-when="true">
 
-        <button type="button" class="btn btn-default">1</button>
-        <button type="button" class="btn btn-default">2</button>
+        <button class="btn btn-success" ui-sref="contract.new" >
+            <span class="glyphicon glyphicon-plus"></span>
+            <span  data-translate="global.menu.menu.newContract" translate-compile>
+                New Contract
+                </span>
+        </button>
+        <br />
+
+
+
+        <button class="btn btn-success" ui-sref="contract.new" >
+            <span class="glyphicon glyphicon-plus"></span>
+            <span  data-translate="global.menu.menu.favorites" translate-compile>
+                Create new Contract
+            </span>
+        </button>
 
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -15,4 +30,5 @@
             </ul>
         </div>
     </div>
+
 </div>
