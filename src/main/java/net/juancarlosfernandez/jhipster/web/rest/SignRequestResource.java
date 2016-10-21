@@ -100,7 +100,7 @@ public class SignRequestResource {
 
         // Check if signaturit token is established
         Optional<Preferences> token = preferencesRepository.findOneByName("token");
-        if (token.isPresent())
+        if (!token.isPresent())
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("signRequest", "tokenNotDefined", "You must define a signaturit token first")).body(null);
 
         // Check if the contract document is established
