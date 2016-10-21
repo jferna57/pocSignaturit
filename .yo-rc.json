@@ -29,6 +29,7 @@
       "en",
       "es"
     ],
-    "serviceDiscoveryType": false
+    "serviceDiscoveryType": false,
+    "herokuAppName": "poc-signaturit"
   }
 }
